@@ -64,6 +64,9 @@ const createSession = async (data: SessionSchemaType) => {
 
 export const Route = createFileRoute('/sessions/create')({
   component: CreateSessionPage,
+  beforeLoad: () => {
+    console.log('Navigating to /sessions/create')
+  },
 })
 
 function CreateSessionPage() {

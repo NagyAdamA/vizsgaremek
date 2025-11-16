@@ -1,4 +1,4 @@
-import { createFileRoute, useNavigate } from '@tanstack/react-router'
+import { createFileRoute, useNavigate, Outlet } from '@tanstack/react-router'
 import { useQuery } from '@tanstack/react-query'
 import { axiosClient } from '@/lib/axios-client'
 import { Link } from '@tanstack/react-router'
@@ -6,6 +6,7 @@ import { Plus, Target, Calendar } from 'lucide-react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ProtectedRoute } from '@/components/protected-route'
+import { useRouterState } from '@tanstack/react-router'
 
 type Session = {
   ID: number
@@ -27,9 +28,14 @@ export const Route = createFileRoute('/sessions')({
 })
 
 function SessionsPage() {
+  const router = useRouterState()
+  const currentPath = router.location.pathname
+  const isExactSessionsPath = currentPath === '/sessions'
+  
   return (
     <ProtectedRoute>
-      <SessionsContent />
+      {isExactSessionsPath && <SessionsContent />}
+      <Outlet />
     </ProtectedRoute>
   )
 }
