@@ -23,13 +23,11 @@ export default function Header() {
     try {
       setIsOpen(false)
       await logout()
-      // Small delay to ensure state is cleared before navigation
       setTimeout(() => {
         navigate({ to: '/login' })
       }, 100)
     } catch (error) {
-      console.error('Logout error:', error)
-      // Still navigate even if logout fails
+      console.error('Sikertlen kilepes:', error)
       navigate({ to: '/login' })
     }
   }
@@ -46,7 +44,7 @@ export default function Header() {
         </button>
         <h1 className="ml-4 text-xl font-semibold">
           <Link to="/">
-            <span className="text-white">Archery Tracker</span>
+            <span className="text-white">bruh moment</span>
           </Link>
         </h1>
       </header>

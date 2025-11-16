@@ -12,27 +12,27 @@ function App() {
   const features = [
     {
       icon: <Target className="w-12 h-12 text-cyan-400" />,
-      title: 'Track Your Sessions',
+      title: 'Bruh',
       description:
-        'Create and manage your archery practice sessions. Record distance, target size, and other session details.',
+        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       icon: <Plus className="w-12 h-12 text-cyan-400" />,
-      title: 'Score Entry',
+      title: 'Placeholder',
       description:
-        'Easily enter your arrow scores with a simple interface. Track individual arrows and ends with X marks for perfect shots.',
+        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       icon: <BarChart3 className="w-12 h-12 text-cyan-400" />,
-      title: 'Performance Statistics',
+      title: 'Szeretem a palacsintát',
       description:
-        'View detailed statistics about your performance. Track averages, X percentages, and progress over time.',
+        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
     {
       icon: <TrendingUp className="w-12 h-12 text-cyan-400" />,
-      title: 'Progress Tracking',
+      title: 'Cica',
       description:
-        'Monitor your improvement over time with comprehensive session history and performance metrics.',
+        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
     },
   ]
 
@@ -44,38 +44,37 @@ function App() {
           <div className="flex items-center justify-center gap-6 mb-6">
             <Target className="w-24 h-24 md:w-32 md:h-32 text-cyan-400" />
             <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">ARCHERY</span>{' '}
+              <span className="text-gray-300">VALAMI</span>{' '}
               <span className="bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-                TRACKER
+                VALAMI
               </span>
             </h1>
           </div>
           <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            Track your scores, analyze your performance, and improve your archery skills
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
           </p>
           <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            A comprehensive archery score-keeping and statistics application.
-            Record your practice sessions, track your progress, and analyze your performance.
+            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
           </p>
           <div className="flex flex-col items-center gap-4">
             <Link
               to="/sessions/create"
               className="px-8 py-3 bg-cyan-500 hover:bg-cyan-600 text-white font-semibold rounded-lg transition-colors shadow-lg shadow-cyan-500/50"
             >
-              Start New Session
+              Új session
             </Link>
             <div className="flex gap-4">
               <Link
                 to="/sessions"
                 className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors"
               >
-                View Sessions
+                Összes session
               </Link>
               <Link
                 to="/statistics"
                 className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors"
               >
-                View Statistics
+                Statisztika
               </Link>
             </div>
           </div>

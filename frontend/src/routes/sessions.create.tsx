@@ -22,7 +22,6 @@ import { ProtectedRoute } from '@/components/protected-route'
 import { Info } from 'lucide-react'
 import { useState } from 'react'
 
-// Standard archery round presets
 const ARCHERY_PRESETS = {
   none: { name: 'Custom', distance: 0, targetSize: 0, arrowsPerEnd: 6 },
   indoor18: { name: 'Indoor 18m (WA 18)', distance: 18, targetSize: 40, arrowsPerEnd: 6 },
@@ -33,10 +32,8 @@ const ARCHERY_PRESETS = {
   outdoor90: { name: 'Outdoor 90m (Recurve)', distance: 90, targetSize: 122, arrowsPerEnd: 6 },
 } as const
 
-// Standard distances for dropdown
 const STANDARD_DISTANCES = [18, 25, 30, 50, 70, 90]
 
-// Standard target sizes for dropdown
 const STANDARD_TARGET_SIZES = [40, 60, 80, 122]
 
 const sessionSchema = z.object({
@@ -82,7 +79,6 @@ function CreateSessionContent() {
   const [selectedPreset, setSelectedPreset] = useState<keyof typeof ARCHERY_PRESETS>('indoor18')
   const [error, setError] = useState<string | null>(null)
   
-  // Debug: Log when component renders
   console.log('CreateSessionContent rendered')
   const { mutate: createSessionMutation, isPending } = useMutation({
     mutationFn: createSession,

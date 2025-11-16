@@ -9,36 +9,34 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     if (!isLoading && !isAuthenticated) {
-      console.log('ProtectedRoute: Not authenticated, redirecting to login')
+      console.log('Nincs bejelentkezve, átirányítás a login oldalra')
       navigate({ to: '/login' })
     }
   }, [isAuthenticated, isLoading, navigate])
 
-  // Show loading state
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
-          <p className="text-gray-500">Checking authentication...</p>
+          <p className="text-gray-500">Fiók ellenőrzése...</p>
         </div>
       </div>
     )
   }
 
-  // If not authenticated, show nothing (will redirect)
   if (!isAuthenticated) {
-    console.log('ProtectedRoute: Not authenticated, returning null')
+    console.log('nincs bejelentkezve')
     return (
       <div className="flex items-center justify-center min-h-[60vh]">
         <div className="text-center">
-          <p className="text-gray-500">Redirecting to login...</p>
+          <p className="text-gray-500">Átirányítás a bejelentkezéshez...</p>
         </div>
       </div>
     )
   }
 
-  console.log('ProtectedRoute: Authenticated, rendering children')
+  console.log('Sikeren bejelentkezve, átirányitas')
   return <>{children}</>
 }
 

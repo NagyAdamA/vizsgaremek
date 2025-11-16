@@ -60,7 +60,7 @@ export function RegistrationForm({
         navigate({ to: "/login" })
       }, 1500)
     } catch (err: any) {
-      const errorMessage = err.response?.data?.message || err.response?.data?.error || "Registration failed. Please try again."
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || "Sikertelen regisztráció. Próbáld újra."
       setError(errorMessage)
     } finally {
       setIsPending(false)
@@ -71,7 +71,7 @@ export function RegistrationForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Registration</CardTitle>
+          <CardTitle>Regisztráció</CardTitle>
         </CardHeader>
         <CardContent>
           <Form {...form}>
@@ -81,9 +81,9 @@ export function RegistrationForm({
                 name="username"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Felhasználónév</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your username" {...field} />
+                      <Input placeholder="Adjon meg egy felhasználónevet" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -96,7 +96,7 @@ export function RegistrationForm({
                   <FormItem>
                     <FormLabel>Email</FormLabel>
                     <FormControl>
-                      <Input type="email" placeholder="Enter your email" {...field} />
+                      <Input type="email" placeholder="Adja meg az email címét" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -107,9 +107,9 @@ export function RegistrationForm({
                 name="password"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Password</FormLabel>
+                    <FormLabel>Jelszó</FormLabel>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                      <Input type="password" placeholder="Adjon meg egy jelszót" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -122,16 +122,16 @@ export function RegistrationForm({
               )}
               {success && (
                 <div className="text-green-500 text-sm bg-green-50 dark:bg-green-900/20 p-3 rounded-md">
-                  Registration successful! Redirecting to login...
+                  Sikeres regisztráció! Átirányítás a bejelentkezéshez...
                 </div>
               )}
               <Button type="submit" disabled={isPending || success}>
-                {isPending ? "Registering..." : success ? "Success!" : "Register"}
+                {isPending ? "Regisztráció..." : success ? "Siker!" : "Regisztráció"}
               </Button>
               <div className="text-center text-sm">
-                Already have an account?{" "}
+                Már van fiókja?{" "}
                 <Link to="/login" className="underline underline-offset-4 hover:text-primary">
-                  Sign in
+                  Bejelentkezés
                 </Link>
               </div>
             </form>

@@ -65,9 +65,9 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Login to your account</CardTitle>
+          <CardTitle>Bejelentkezés</CardTitle>
           <CardDescription>
-            Enter your username below to login to your account
+            Adja meg a felhasználónevét és jelszavát a bejelentkezéshez.
           </CardDescription>
         </CardHeader>
         <CardContent>
@@ -78,9 +78,9 @@ export function LoginForm({
                 name="userID"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Username</FormLabel>
+                    <FormLabel>Felhaszálónév</FormLabel>
                     <FormControl>
-                      <Input placeholder="Enter your username" {...field} />
+                      <Input placeholder="Adja meg a felhasználónevét" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -92,10 +92,10 @@ export function LoginForm({
                 render={({ field }) => (
                   <FormItem>
                     <div className="flex items-center">
-                      <FormLabel>Password</FormLabel>
+                      <FormLabel>Jelszó</FormLabel>
                     </div>
                     <FormControl>
-                      <Input type="password" placeholder="Enter your password" {...field} />
+                      <Input type="password" placeholder="Adja meg a jelszavát" {...field} />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -107,12 +107,12 @@ export function LoginForm({
                 </div>
               )}
               <Button type="submit" disabled={isPending}>
-                {isPending ? "Logging in..." : "Login"}
+                {isPending ? "Bejelentkezés..." : "Bejelentkezés"}
               </Button>
               <div className="text-center text-sm">
-                Don&apos;t have an account?{" "}
+                Nincs még fiókja?{" "}
                 <Link to="/registration" className="underline underline-offset-4 hover:text-primary">
-                  Sign up
+                  Regisztráció
                 </Link>
               </div>
             </form>
