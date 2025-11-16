@@ -19,8 +19,8 @@ import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { axiosClientWithoutAuth } from "@/lib/axios-client"
-import { useMutation } from "@tanstack/react-query"
 import { useNavigate, Link } from "@tanstack/react-router"
+import { useState } from "react"
 
 const registrationSchema = z.object({
   username: z.string().min(1, "Username is required"),
@@ -30,26 +30,15 @@ const registrationSchema = z.object({
 
 type RegistrationSchemaType = z.infer<typeof registrationSchema>
 
-type RegistrationResponse = {
-  message?: string
-  user?: unknown
-}
-
-const postRegistration = ({ data }: { data: RegistrationSchemaType }) => {
-  return axiosClientWithoutAuth.post<RegistrationResponse>("/api/users/", data)
-}
-
 export function RegistrationForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const navigate = useNavigate()
-  const { mutate: registration, isPending } = useMutation({
-    mutationFn: ({ data }: { data: RegistrationSchemaType }) => postRegistration({ data }),
-    onSuccess() {
-      navigate({ to: "/login" })
-    },
-  })
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
+  const [success, setSuccess] = useState(false)
+
   const form = useForm<RegistrationSchemaType>({
     mode: 'onChange',
     resolver: zodResolver(registrationSchema),
@@ -60,8 +49,22 @@ export function RegistrationForm({
     },
   })
 
-  function onSubmit(values: RegistrationSchemaType) {
-    registration({ data: values })
+  async function onSubmit(values: RegistrationSchemaType) {
+    setError(null)
+    setSuccess(false)
+    setIsPending(true)
+    try {
+      await axiosClientWithoutAuth.post("/api/users/", values)
+      setSuccess(true)
+      setTimeout(() => {
+        navigate({ to: "/login" })
+      }, 1500)
+    } catch (err: any) {
+      const errorMessage = err.response?.data?.message || err.response?.data?.error || "Registration failed. Please try again."
+      setError(errorMessage)
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -112,8 +115,18 @@ export function RegistrationForm({
                   </FormItem>
                 )}
               />
-              <Button type="submit" disabled={isPending}>
-                {isPending ? "Registering..." : "Register"}
+              {error && (
+                <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
+                  {error}
+                </div>
+              )}
+              {success && (
+                <div className="text-green-500 text-sm bg-green-50 dark:bg-green-900/20 p-3 rounded-md">
+                  Registration successful! Redirecting to login...
+                </div>
+              )}
+              <Button type="submit" disabled={isPending || success}>
+                {isPending ? "Registering..." : success ? "Success!" : "Register"}
               </Button>
               <div className="text-center text-sm">
                 Already have an account?{" "}

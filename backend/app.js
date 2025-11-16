@@ -11,6 +11,7 @@ const cookieParser = require("cookie-parser");
 app.use(cors(
 {
     origin: [ "http://localhost:3000", "http://localhost:3001" ],
+    credentials: true,
 }));
 
 app.use(express.json());
@@ -25,11 +26,23 @@ const errorHandler = require("./api/middlewares/errorHandler");
 
 const authRoutes = require("./api/routes/authRoutes");
 
+const sessionRoutes = require("./api/routes/sessionRoutes");
+
+const scoreRoutes = require("./api/routes/scoreRoutes");
+
+const statisticsRoutes = require("./api/routes/statisticsRoutes");
+
 app.use("/api", api);
 
 api.use("/users", userRoutes);
 
 api.use("/auth", authRoutes);
+
+api.use("/sessions", sessionRoutes);
+
+api.use("/scores", scoreRoutes);
+
+api.use("/statistics", statisticsRoutes);
 
 api.use(errorHandler.notFound);
 

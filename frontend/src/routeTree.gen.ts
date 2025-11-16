@@ -9,9 +9,13 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StatisticsRouteImport } from './routes/statistics'
+import { Route as SessionsRouteImport } from './routes/sessions'
 import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as SessionsCreateRouteImport } from './routes/sessions.create'
+import { Route as SessionsSessionIDRouteImport } from './routes/sessions.$sessionID'
 import { Route as DemoTanstackQueryRouteImport } from './routes/demo/tanstack-query'
 import { Route as DemoTableRouteImport } from './routes/demo/table'
 import { Route as DemoStoreRouteImport } from './routes/demo/store'
@@ -24,6 +28,16 @@ import { Route as DemoStartSsrSpaModeRouteImport } from './routes/demo/start.ssr
 import { Route as DemoStartSsrFullSsrRouteImport } from './routes/demo/start.ssr.full-ssr'
 import { Route as DemoStartSsrDataOnlyRouteImport } from './routes/demo/start.ssr.data-only'
 
+const StatisticsRoute = StatisticsRouteImport.update({
+  id: '/statistics',
+  path: '/statistics',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SessionsRoute = SessionsRouteImport.update({
+  id: '/sessions',
+  path: '/sessions',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegistrationRoute = RegistrationRouteImport.update({
   id: '/registration',
   path: '/registration',
@@ -38,6 +52,16 @@ const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
+} as any)
+const SessionsCreateRoute = SessionsCreateRouteImport.update({
+  id: '/create',
+  path: '/create',
+  getParentRoute: () => SessionsRoute,
+} as any)
+const SessionsSessionIDRoute = SessionsSessionIDRouteImport.update({
+  id: '/$sessionID',
+  path: '/$sessionID',
+  getParentRoute: () => SessionsRoute,
 } as any)
 const DemoTanstackQueryRoute = DemoTanstackQueryRouteImport.update({
   id: '/demo/tanstack-query',
@@ -99,9 +123,13 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/sessions': typeof SessionsRouteWithChildren
+  '/statistics': typeof StatisticsRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/sessions/$sessionID': typeof SessionsSessionIDRoute
+  '/sessions/create': typeof SessionsCreateRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -115,9 +143,13 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/sessions': typeof SessionsRouteWithChildren
+  '/statistics': typeof StatisticsRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/sessions/$sessionID': typeof SessionsSessionIDRoute
+  '/sessions/create': typeof SessionsCreateRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -132,9 +164,13 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/sessions': typeof SessionsRouteWithChildren
+  '/statistics': typeof StatisticsRoute
   '/demo/store': typeof DemoStoreRoute
   '/demo/table': typeof DemoTableRoute
   '/demo/tanstack-query': typeof DemoTanstackQueryRoute
+  '/sessions/$sessionID': typeof SessionsSessionIDRoute
+  '/sessions/create': typeof SessionsCreateRoute
   '/demo/api/names': typeof DemoApiNamesRoute
   '/demo/api/tq-todos': typeof DemoApiTqTodosRoute
   '/demo/start/api-request': typeof DemoStartApiRequestRoute
@@ -150,9 +186,13 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/registration'
+    | '/sessions'
+    | '/statistics'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/sessions/$sessionID'
+    | '/sessions/create'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
@@ -166,9 +206,13 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/registration'
+    | '/sessions'
+    | '/statistics'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/sessions/$sessionID'
+    | '/sessions/create'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
@@ -182,9 +226,13 @@ export interface FileRouteTypes {
     | '/'
     | '/login'
     | '/registration'
+    | '/sessions'
+    | '/statistics'
     | '/demo/store'
     | '/demo/table'
     | '/demo/tanstack-query'
+    | '/sessions/$sessionID'
+    | '/sessions/create'
     | '/demo/api/names'
     | '/demo/api/tq-todos'
     | '/demo/start/api-request'
@@ -199,6 +247,8 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   LoginRoute: typeof LoginRoute
   RegistrationRoute: typeof RegistrationRoute
+  SessionsRoute: typeof SessionsRouteWithChildren
+  StatisticsRoute: typeof StatisticsRoute
   DemoStoreRoute: typeof DemoStoreRoute
   DemoTableRoute: typeof DemoTableRoute
   DemoTanstackQueryRoute: typeof DemoTanstackQueryRoute
@@ -214,6 +264,20 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/statistics': {
+      id: '/statistics'
+      path: '/statistics'
+      fullPath: '/statistics'
+      preLoaderRoute: typeof StatisticsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sessions': {
+      id: '/sessions'
+      path: '/sessions'
+      fullPath: '/sessions'
+      preLoaderRoute: typeof SessionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/registration': {
       id: '/registration'
       path: '/registration'
@@ -234,6 +298,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/sessions/create': {
+      id: '/sessions/create'
+      path: '/create'
+      fullPath: '/sessions/create'
+      preLoaderRoute: typeof SessionsCreateRouteImport
+      parentRoute: typeof SessionsRoute
+    }
+    '/sessions/$sessionID': {
+      id: '/sessions/$sessionID'
+      path: '/$sessionID'
+      fullPath: '/sessions/$sessionID'
+      preLoaderRoute: typeof SessionsSessionIDRouteImport
+      parentRoute: typeof SessionsRoute
     }
     '/demo/tanstack-query': {
       id: '/demo/tanstack-query'
@@ -315,10 +393,26 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface SessionsRouteChildren {
+  SessionsSessionIDRoute: typeof SessionsSessionIDRoute
+  SessionsCreateRoute: typeof SessionsCreateRoute
+}
+
+const SessionsRouteChildren: SessionsRouteChildren = {
+  SessionsSessionIDRoute: SessionsSessionIDRoute,
+  SessionsCreateRoute: SessionsCreateRoute,
+}
+
+const SessionsRouteWithChildren = SessionsRoute._addFileChildren(
+  SessionsRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   LoginRoute: LoginRoute,
   RegistrationRoute: RegistrationRoute,
+  SessionsRoute: SessionsRouteWithChildren,
+  StatisticsRoute: StatisticsRoute,
   DemoStoreRoute: DemoStoreRoute,
   DemoTableRoute: DemoTableRoute,
   DemoTanstackQueryRoute: DemoTanstackQueryRoute,

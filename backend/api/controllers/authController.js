@@ -42,7 +42,13 @@ exports.status = (req, res, next) =>
 
 exports.logout = (req, res, next) =>
 {
-    res.clearCookie("user_token");
+    res.clearCookie("user_token", 
+    {
+        httpOnly: true,
+        secure: process.env.NODE_ENV == "production",
+        sameSite: "strict",
+        path: "/",
+    });
 
-    res.sendStatus(200);
+    res.status(200).json({ message: "Logged out successfully" });
 }

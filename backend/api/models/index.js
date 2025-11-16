@@ -4,6 +4,10 @@ module.exports = (sequelize) =>
 
     const Order = require("./Order")(sequelize);
 
+    const Session = require("./Session")(sequelize);
+
+    const Score = require("./Score")(sequelize);
+
     User.hasMany(Order, 
     {
         foreignKey: "userID",
@@ -22,5 +26,41 @@ module.exports = (sequelize) =>
         constraints: false,
     });
 
-    return { User, Order };
+    User.hasMany(Session, 
+    {
+        foreignKey: "userID",
+
+        as: "sessions",
+
+        constraints: false,
+    });
+
+    Session.belongsTo(User, 
+    {
+        foreignKey: "userID",
+
+        as: "user",
+
+        constraints: false,
+    });
+
+    Session.hasMany(Score, 
+    {
+        foreignKey: "sessionID",
+
+        as: "scores",
+
+        constraints: false,
+    });
+
+    Score.belongsTo(Session, 
+    {
+        foreignKey: "sessionID",
+
+        as: "session",
+
+        constraints: false,
+    });
+
+    return { User, Order, Session, Score };
 }

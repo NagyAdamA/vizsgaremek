@@ -19,9 +19,9 @@ import { Input } from "@/components/ui/input"
 import z from "zod"
 import { useForm } from "react-hook-form"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { axiosClientWithoutAuth } from "@/lib/axios-client"
-import { useMutation } from "@tanstack/react-query"
 import { useNavigate, Link } from "@tanstack/react-router"
+import { useAuth } from "@/contexts/auth-context"
+import { useState } from "react"
 
 const loginSchema = z.object({
   userID: z.string().min(1, "Username is required"),
@@ -30,25 +30,14 @@ const loginSchema = z.object({
 
 type LoginSchemaType = z.infer<typeof loginSchema>
 
-type LoginResponse = {
-  token: string
-}
-
-const postLogin = ({ data }: { data: LoginSchemaType }) => {
-  return axiosClientWithoutAuth.post<LoginResponse>("/api/auth/login", data)
-}
-
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
   const navigate = useNavigate()
-  const { mutate: login, isPending } = useMutation({
-    mutationFn: ({ data }: { data: LoginSchemaType }) => postLogin({ data }),
-    onSuccess() {
-      navigate({ to: "/" })
-    },
-  })
+  const { login } = useAuth()
+  const [error, setError] = useState<string | null>(null)
+  const [isPending, setIsPending] = useState(false)
 
   const form = useForm<LoginSchemaType>({
     mode: 'onChange',
@@ -59,8 +48,17 @@ export function LoginForm({
     },
   })
 
-  function onSubmit(values: LoginSchemaType) {
-    login({ data: values })
+  async function onSubmit(values: LoginSchemaType) {
+    setError(null)
+    setIsPending(true)
+    try {
+      await login(values.userID, values.password)
+      navigate({ to: "/" })
+    } catch (err: any) {
+      setError(err.message || "Login failed. Please check your credentials.")
+    } finally {
+      setIsPending(false)
+    }
   }
 
   return (
@@ -103,6 +101,11 @@ export function LoginForm({
                   </FormItem>
                 )}
               />
+              {error && (
+                <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
+                  {error}
+                </div>
+              )}
               <Button type="submit" disabled={isPending}>
                 {isPending ? "Logging in..." : "Login"}
               </Button>
