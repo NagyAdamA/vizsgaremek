@@ -1,10 +1,5 @@
-import { Link, useNavigate } from '@tanstack/react-router'
-
-import { useState } from 'react'
+import { Link, useNavigate, useRouterState } from '@tanstack/react-router'
 import {
-  Home,
-  Menu,
-  X,
   LogIn,
   UserPlus,
   Target,
@@ -15,13 +10,15 @@ import {
 import { useAuth } from '@/contexts/auth-context'
 
 export default function Header() {
-  const [isOpen, setIsOpen] = useState(false)
   const { isAuthenticated, user, logout } = useAuth()
   const navigate = useNavigate()
 
+  const router = useRouterState()
+  const currentPath = router.location.pathname
+  const isSessionsActive = currentPath === '/sessions' || (currentPath.startsWith('/sessions/') && currentPath !== '/sessions/create')
+
   const handleLogout = async () => {
     try {
-      setIsOpen(false)
       await logout()
       setTimeout(() => {
         navigate({ to: '/login' })
@@ -33,137 +30,95 @@ export default function Header() {
   }
 
   return (
-    <>
-      <header className="p-4 flex items-center bg-gray-800 text-white shadow-lg">
-        <button
-          onClick={() => setIsOpen(true)}
-          className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
-          aria-label="Open menu"
-        >
-          <Menu size={24} />
-        </button>
-        <h1 className="ml-4 text-xl font-semibold">
-          <Link to="/">
-            <span className="text-white">bruh moment</span>
-          </Link>
-        </h1>
-      </header>
+    <header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
+      <h1 className="text-xl font-semibold">
+        <Link to="/">
+          <span className="text-white">bruh moment</span>
+        </Link>
+      </h1>
 
-      <aside
-        className={`fixed top-0 left-0 h-full w-80 bg-gray-900 text-white shadow-2xl z-50 transform transition-transform duration-300 ease-in-out flex flex-col ${
-          isOpen ? 'translate-x-0' : '-translate-x-full'
-        }`}
-      >
-        <div className="flex items-center justify-between p-4 border-b border-gray-700">
-          <h2 className="text-xl font-bold">Navigation</h2>
-          <button
-            onClick={() => setIsOpen(false)}
-            className="p-2 hover:bg-gray-800 rounded-lg transition-colors"
-            aria-label="Close menu"
-          >
-            <X size={24} />
-          </button>
-        </div>
+      <nav className="flex items-center gap-4">
+        {!isAuthenticated ? (
+          <>
+            <Link
+              to="/login"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+              activeProps={{
+                className:
+                  'flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground transition-colors',
+              }}
+            >
+              <LogIn size={20} />
+              <span className="font-medium hidden md:inline">Login</span>
+            </Link>
 
-        <nav className="flex-1 p-4 overflow-y-auto">
-          <Link
-            to="/"
-            onClick={() => setIsOpen(false)}
-            className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-            activeProps={{
-              className:
-                'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-            }}
-          >
-            <Home size={20} />
-            <span className="font-medium">Home</span>
-          </Link>
+            <Link
+              to="/registration"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+              activeProps={{
+                className:
+                  'flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground transition-colors',
+              }}
+            >
+              <UserPlus size={20} />
+              <span className="font-medium hidden md:inline">Registration</span>
+            </Link>
+          </>
+        ) : (
+          <>
+            <Link
+              to="/sessions"
+              className={
+                isSessionsActive
+                  ? 'flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground transition-colors'
+                  : 'flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors'
+              }
+            >
+              <Target size={20} />
+              <span className="font-medium hidden md:inline">Sessions</span>
+            </Link>
 
-          {!isAuthenticated ? (
-            <>
-              <Link
-                to="/login"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <LogIn size={20} />
-                <span className="font-medium">Login</span>
-              </Link>
+            <Link
+              to="/sessions/create"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+              activeProps={{
+                className:
+                  'flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground transition-colors',
+              }}
+            >
+              <Plus size={20} />
+              <span className="font-medium hidden md:inline">New Session</span>
+            </Link>
 
-              <Link
-                to="/registration"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <UserPlus size={20} />
-                <span className="font-medium">Registration</span>
-              </Link>
-            </>
-          ) : (
-            <>
+            <Link
+              to="/statistics"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-muted transition-colors"
+              activeProps={{
+                className:
+                  'flex items-center gap-2 px-3 py-2 rounded-lg bg-primary text-primary-foreground transition-colors',
+              }}
+            >
+              <BarChart3 size={20} />
+              <span className="font-medium hidden md:inline">Statistics</span>
+            </Link>
+
+            <div className="flex items-center ml-4 gap-4 border-l border-gray-600 pl-4">
               {user && (
-                <div className="px-3 py-2 mb-2 text-sm text-gray-400 border-b border-gray-700">
-                  Logged in as: <span className="text-white font-medium">{user.username}</span>
-                </div>
+                <span className="text-sm text-gray-300 hidden lg:inline">
+                  {user.username}
+                </span>
               )}
-              <Link
-                to="/sessions"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <Target size={20} />
-                <span className="font-medium">Sessions</span>
-              </Link>
-
-              <Link
-                to="/sessions/create"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <Plus size={20} />
-                <span className="font-medium">New Session</span>
-              </Link>
-
-              <Link
-                to="/statistics"
-                onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2"
-                activeProps={{
-                  className:
-                    'flex items-center gap-3 p-3 rounded-lg bg-cyan-600 hover:bg-cyan-700 transition-colors mb-2',
-                }}
-              >
-                <BarChart3 size={20} />
-                <span className="font-medium">Statistics</span>
-              </Link>
-
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-3 p-3 rounded-lg hover:bg-gray-800 transition-colors mb-2 w-full text-left"
+                className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-destructive/20 text-destructive-foreground transition-colors"
+                title="Logout"
               >
                 <LogOut size={20} />
-                <span className="font-medium">Logout</span>
               </button>
-            </>
-          )}
-        </nav>
-      </aside>
-    </>
+            </div>
+          </>
+        )}
+      </nav>
+    </header>
   )
 }

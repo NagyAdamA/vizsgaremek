@@ -78,7 +78,7 @@ function CreateSessionContent() {
   const navigate = useNavigate()
   const [selectedPreset, setSelectedPreset] = useState<keyof typeof ARCHERY_PRESETS>('indoor18')
   const [error, setError] = useState<string | null>(null)
-  
+
   console.log('CreateSessionContent rendered')
   const { mutate: createSessionMutation, isPending } = useMutation({
     mutationFn: createSession,
@@ -143,7 +143,7 @@ function CreateSessionContent() {
                   onChange={(e) => handlePresetChange(e.target.value as keyof typeof ARCHERY_PRESETS)}
                 >
                   {Object.entries(ARCHERY_PRESETS).map(([key, preset]) => (
-                    <option key={key} value={key}>
+                    <option key={key} value={key} className="bg-background text-foreground dark:bg-slate-900 dark:text-gray-100">
                       {preset.name}
                     </option>
                   ))}
@@ -198,7 +198,7 @@ function CreateSessionContent() {
                             form.setValue('distance', dist, { shouldValidate: true })
                             setSelectedPreset('none')
                           }}
-                          className={field.value === dist ? 'bg-cyan-100 dark:bg-cyan-900' : ''}
+                          className={field.value === dist ? 'bg-primary/20 dark:bg-primary/20' : ''}
                         >
                           {dist}m
                         </Button>
@@ -240,7 +240,7 @@ function CreateSessionContent() {
                             form.setValue('targetSize', size, { shouldValidate: true })
                             setSelectedPreset('none')
                           }}
-                          className={field.value === size ? 'bg-cyan-100 dark:bg-cyan-900' : ''}
+                          className={field.value === size ? 'bg-primary/20 dark:bg-primary/20' : ''}
                         >
                           {size}cm
                         </Button>
@@ -282,7 +282,7 @@ function CreateSessionContent() {
                             form.setValue('arrowsPerEnd', count, { shouldValidate: true })
                             setSelectedPreset('none')
                           }}
-                          className={field.value === count ? 'bg-cyan-100 dark:bg-cyan-900' : ''}
+                          className={field.value === count ? 'bg-primary/20 dark:bg-primary/20' : ''}
                         >
                           {count} arrows
                         </Button>
@@ -297,10 +297,10 @@ function CreateSessionContent() {
               />
 
               {/* Archery Rules Info */}
-              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
                 <div className="flex items-start gap-2">
-                  <Info className="h-5 w-5 text-blue-600 dark:text-blue-400 mt-0.5" />
-                  <div className="text-sm text-blue-800 dark:text-blue-200">
+                  <Info className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
+                  <div className="text-sm text-green-800 dark:text-green-200">
                     <p className="font-semibold mb-1">Archery Standards Reference:</p>
                     <ul className="list-disc list-inside space-y-1 text-xs">
                       <li>Indoor 18m: 40cm target, 6 arrows/end</li>
@@ -321,9 +321,9 @@ function CreateSessionContent() {
                   <FormItem>
                     <FormLabel>Notes (optional)</FormLabel>
                     <FormControl>
-                      <Textarea 
-                        placeholder="Weather conditions, equipment used, training focus, etc..." 
-                        {...field} 
+                      <Textarea
+                        placeholder="Weather conditions, equipment used, training focus, etc..."
+                        {...field}
                       />
                     </FormControl>
                     <FormDescription>
@@ -345,8 +345,8 @@ function CreateSessionContent() {
                 </div>
               )}
               <div className="flex gap-4">
-                <Button 
-                  type="submit" 
+                <Button
+                  type="submit"
                   disabled={isPending}
                 >
                   {isPending ? 'Creating...' : 'Create Session'}

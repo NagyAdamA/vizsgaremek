@@ -53,9 +53,9 @@ export function LoginForm({
     setIsPending(true)
     try {
       await login(values.userID, values.password)
-      navigate({ to: "/" })
+      navigate({ to: "/sessions" })
     } catch (err: any) {
-      setError(err.message || "Login failed. Please check your credentials.")
+      setError(err.message || "Sikertelen belépés. Ellenőrizze a bejelentkezési adatokat.")
     } finally {
       setIsPending(false)
     }
@@ -65,50 +65,55 @@ export function LoginForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Bejelentkezés</CardTitle>
+          <CardTitle className="text-2xl">Bejelentkezés</CardTitle>
           <CardDescription>
             Adja meg a felhasználónevét és jelszavát a bejelentkezéshez.
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="userID"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Felhaszálónév</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Adja meg a felhasználónevét" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <div className="flex items-center">
-                      <FormLabel>Jelszó</FormLabel>
-                    </div>
-                    <FormControl>
-                      <Input type="password" placeholder="Adja meg a jelszavát" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="userID"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Felhaszálónév</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Adja meg a felhasználónevét" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <div className="flex items-center justify-between">
+                        <FormLabel>Jelszó</FormLabel>
+                      </div>
+                      <FormControl>
+                        <Input type="password" placeholder="Adja meg a jelszavát" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
+
               {error && (
                 <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
                   {error}
                 </div>
               )}
-              <Button type="submit" disabled={isPending}>
+
+              <Button type="submit" className="w-full" disabled={isPending}>
                 {isPending ? "Bejelentkezés..." : "Bejelentkezés"}
               </Button>
+
               <div className="text-center text-sm">
                 Nincs még fiókja?{" "}
                 <Link to="/registration" className="underline underline-offset-4 hover:text-primary">

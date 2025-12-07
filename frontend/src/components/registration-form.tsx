@@ -2,6 +2,7 @@ import { cn } from "@/lib/utils"
 import {
   Card,
   CardContent,
+  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
@@ -23,9 +24,9 @@ import { useNavigate, Link } from "@tanstack/react-router"
 import { useState } from "react"
 
 const registrationSchema = z.object({
-  username: z.string().min(1, "Username is required"),
-  email: z.string().email("Invalid email address"),
-  password: z.string().min(6, "Password must be at least 6 characters"),
+  username: z.string().min(1, "Felhasználónév kötelező"),
+  email: z.string().email("Érvénytelen email cím"),
+  password: z.string().min(6, "Jelszó legalább 6 karakter hosszúnak kell lennie"),
 })
 
 type RegistrationSchemaType = z.infer<typeof registrationSchema>
@@ -71,50 +72,55 @@ export function RegistrationForm({
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader>
-          <CardTitle>Regisztráció</CardTitle>
+          <CardTitle className="text-2xl">Regisztráció</CardTitle>
+          <CardDescription>
+            Adja meg adatait a regisztrációhoz.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-              <FormField
-                control={form.control}
-                name="username"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Felhasználónév</FormLabel>
-                    <FormControl>
-                      <Input placeholder="Adjon meg egy felhasználónevet" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="email"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Email</FormLabel>
-                    <FormControl>
-                      <Input type="email" placeholder="Adja meg az email címét" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="password"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel>Jelszó</FormLabel>
-                    <FormControl>
-                      <Input type="password" placeholder="Adjon meg egy jelszót" {...field} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-4">
+                <FormField
+                  control={form.control}
+                  name="username"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Felhasználónév</FormLabel>
+                      <FormControl>
+                        <Input placeholder="Adjon meg egy felhasználónevet" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Email</FormLabel>
+                      <FormControl>
+                        <Input type="email" placeholder="Adja meg az email címét" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Jelszó</FormLabel>
+                      <FormControl>
+                        <Input type="password" placeholder="Adjon meg egy jelszót" {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </div>
               {error && (
                 <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
                   {error}
@@ -125,7 +131,7 @@ export function RegistrationForm({
                   Sikeres regisztráció! Átirányítás a bejelentkezéshez...
                 </div>
               )}
-              <Button type="submit" disabled={isPending || success}>
+              <Button type="submit" className="w-full" disabled={isPending || success}>
                 {isPending ? "Regisztráció..." : success ? "Siker!" : "Regisztráció"}
               </Button>
               <div className="text-center text-sm">

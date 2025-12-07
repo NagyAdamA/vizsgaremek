@@ -118,7 +118,7 @@ function StatisticsContent() {
         </CardHeader>
         <CardContent>
           {stats.sessionStats.length === 0 ? (
-            <div className="text-center py-8 text-gray-500">
+            <div className="text-center py-8 text-muted-foreground">
               No sessions recorded yet
             </div>
           ) : (
@@ -129,24 +129,24 @@ function StatisticsContent() {
                   to="/sessions/$sessionID"
                   params={{ sessionID: session.sessionID.toString() }}
                 >
-                  <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-gray-50 transition-colors">
+                  <div className="flex items-center justify-between p-4 border rounded-lg hover:bg-accent/50 transition-colors">
                     <div className="flex-1">
                       <h3 className="font-semibold">{session.sessionName}</h3>
-                      <p className="text-sm text-gray-500">
+                      <p className="text-sm text-muted-foreground">
                         {new Date(session.date).toLocaleDateString()}
                       </p>
                     </div>
                     <div className="flex gap-6 text-sm">
                       <div>
-                        <span className="text-gray-500">Arrows: </span>
+                        <span className="text-muted-foreground">Arrows: </span>
                         <span className="font-medium">{session.arrows}</span>
                       </div>
                       <div>
-                        <span className="text-gray-500">Average: </span>
+                        <span className="text-muted-foreground">Average: </span>
                         <span className="font-medium">{session.averageScore.toFixed(2)}</span>
                       </div>
                       <div>
-                        <span className="text-gray-500">X: </span>
+                        <span className="text-muted-foreground">X: </span>
                         <span className="font-medium">{session.xCount}</span>
                       </div>
                     </div>
