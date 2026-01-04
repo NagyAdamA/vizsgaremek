@@ -67,7 +67,7 @@ function SessionDetailContent() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center">Loading session...</div>
+        <div className="text-center">Beírólap betöltése...</div>
       </div>
     )
   }
@@ -75,9 +75,9 @@ function SessionDetailContent() {
   if (error || !session) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center text-red-500">Error loading session</div>
+        <div className="text-center text-red-500">Hiba a beírólap betöltésekor</div>
         <Link to="/sessions">
-          <Button className="mt-4">Back to Sessions</Button>
+          <Button className="mt-4">Vissza a beírólapokhoz</Button>
         </Link>
       </div>
     )
@@ -101,7 +101,7 @@ function SessionDetailContent() {
         <Link to="/sessions">
           <Button variant="outline" size="sm">
             <ArrowLeft className="mr-2 h-4 w-4" />
-            Back
+            Vissza
           </Button>
         </Link>
         <h1 className="text-3xl font-bold flex-1">{session.name}</h1>
@@ -115,31 +115,31 @@ function SessionDetailContent() {
           }}
         >
           <Trash2 className="mr-2 h-4 w-4" />
-          Delete
+          Törlés
         </Button>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
         <Card>
           <CardHeader>
-            <CardTitle>Session Details</CardTitle>
+            <CardTitle>Részletek</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Distance:</span>
+                <span className="text-sm text-gray-500">Távolság:</span>
                 <span className="text-sm font-medium">{session.distance}m</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Target Size:</span>
+                <span className="text-sm text-gray-500">Lőlap mérete:</span>
                 <span className="text-sm font-medium">{session.targetSize}cm</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Arrows Per End:</span>
+                <span className="text-sm text-gray-500">Vesszők száma:</span>
                 <span className="text-sm font-medium">{session.arrowsPerEnd}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Date:</span>
+                <span className="text-sm text-gray-500">Dátum:</span>
                 <span className="text-sm font-medium">
                   {new Date(session.createdAt).toLocaleDateString()}
                 </span>
@@ -155,15 +155,15 @@ function SessionDetailContent() {
           <CardContent>
             <div className="space-y-2">
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Total Arrows:</span>
+                <span className="text-sm text-gray-500">Összes vessző:</span>
                 <span className="text-sm font-medium">{stats.totalArrows}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Total Score:</span>
+                <span className="text-sm text-gray-500">Össz pontszám:</span>
                 <span className="text-sm font-medium">{stats.totalScore}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">Average:</span>
+                <span className="text-sm text-gray-500">Átlag:</span>
                 <span className="text-sm font-medium">{stats.avgScore}</span>
               </div>
               <div className="flex justify-between">
@@ -171,7 +171,7 @@ function SessionDetailContent() {
                 <span className="text-sm font-medium">{stats.xCount}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-sm text-gray-500">X Percentage:</span>
+                <span className="text-sm text-gray-500">X Százalék:</span>
                 <span className="text-sm font-medium">{stats.xPercentage}%</span>
               </div>
             </div>
@@ -182,7 +182,7 @@ function SessionDetailContent() {
       {session.notes && (
         <Card className="mb-6">
           <CardHeader>
-            <CardTitle>Notes</CardTitle>
+            <CardTitle>Megjegyzések</CardTitle>
           </CardHeader>
           <CardContent>
             <p className="text-sm">{session.notes}</p>
@@ -192,8 +192,8 @@ function SessionDetailContent() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Score Entry</CardTitle>
-          <CardDescription>Enter your arrow scores for this session</CardDescription>
+          <CardTitle>Eredmények</CardTitle>
+          <CardDescription>Add meg a pontszámodat</CardDescription>
         </CardHeader>
         <CardContent>
           <ScoreEntry sessionID={session.ID} arrowsPerEnd={session.arrowsPerEnd} />

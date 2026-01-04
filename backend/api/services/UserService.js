@@ -18,7 +18,7 @@ class UserService
 
         const user = await this.userRepository.getUser(userID, includePassword);
 
-        if(!user) throw new NotFoundError("Can not found user with this user identification", 
+        if(!user) throw new NotFoundError("Can not found user with this user identification",
         {
             data: userID
         });
@@ -28,7 +28,7 @@ class UserService
 
     async createUser(userData)
     {
-        if(!userData) throw new BadRequestError("Missing user data from payload", 
+        if(!userData) throw new BadRequestError("Missing user data from payload",
         {
             data: userData,
         });
@@ -38,17 +38,63 @@ class UserService
             data: userData,
         });
 
-        if(!userData.password) throw new BadRequestError("Missing password from payload", 
+        if(!userData.password) throw new BadRequestError("Missing password from payload",
         {
             data: userData,
         });
 
-        if(!userData.email) throw new BadRequestError("Missing email from payload", 
+        if(!userData.email) throw new BadRequestError("Missing email from payload",
         {
             data: userData,
         });
 
         return await this.userRepository.createUser(userData);
+    }
+
+    // Jelszó-visszaállítás
+    async getUserByEmail(email)
+    {
+        if (!email) throw new BadRequestError("Missing email from payload");
+
+        const user = await this.userRepository.getUserByEmail(email);
+
+        if (!user) throw new NotFoundError("User not found with this email", { data: email });
+
+        return user;
+    }
+
+    async setResetToken(userId, token, expires)
+    {
+        if (!userId || !token || !expires)
+            throw new BadRequestError("Missing reset token data");
+
+        return await this.userRepository.setResetToken(userId, token, expires);
+    }
+
+    async getUserByResetToken(token)
+    {
+        if (!token) throw new BadRequestError("Missing reset token");
+
+        const user = await this.userRepository.getUserByResetToken(token);
+
+        if (!user) throw new NotFoundError("Invalid or expired reset token", { data: token });
+
+        return user;
+    }
+
+    async updatePassword(userId, hashedPassword)
+    {
+        if (!userId || !hashedPassword)
+            throw new BadRequestError("Missing password update data");
+
+        return await this.userRepository.updatePassword(userId, hashedPassword);
+    }
+
+    async clearResetToken(userId)
+    {
+        if (!userId) throw new BadRequestError("Missing user ID for clearing reset token");
+
+        return await this.userRepository.clearResetToken(userId);
     }
 }
 

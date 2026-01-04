@@ -33,7 +33,7 @@ export default function Header() {
     <header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
       <h1 className="text-xl font-semibold">
         <Link to="/">
-          <span className="text-white">bruh moment</span>
+          <span className="text-white">Beírólap</span>
         </Link>
       </h1>
 
@@ -49,7 +49,7 @@ export default function Header() {
               }}
             >
               <LogIn size={20} />
-              <span className="font-medium hidden md:inline">Login</span>
+              <span className="font-medium hidden md:inline">Bejelentkezés</span>
             </Link>
 
             <Link
@@ -61,7 +61,7 @@ export default function Header() {
               }}
             >
               <UserPlus size={20} />
-              <span className="font-medium hidden md:inline">Registration</span>
+              <span className="font-medium hidden md:inline">Regisztráció</span>
             </Link>
           </>
         ) : (
@@ -75,7 +75,7 @@ export default function Header() {
               }
             >
               <Target size={20} />
-              <span className="font-medium hidden md:inline">Sessions</span>
+              <span className="font-medium hidden md:inline">Beírólapok</span>
             </Link>
 
             <Link
@@ -87,7 +87,7 @@ export default function Header() {
               }}
             >
               <Plus size={20} />
-              <span className="font-medium hidden md:inline">New Session</span>
+              <span className="font-medium hidden md:inline">Új beírólap</span>
             </Link>
 
             <Link
@@ -99,7 +99,7 @@ export default function Header() {
               }}
             >
               <BarChart3 size={20} />
-              <span className="font-medium hidden md:inline">Statistics</span>
+              <span className="font-medium hidden md:inline">Statisztika</span>
             </Link>
 
             <div className="flex items-center ml-4 gap-4 border-l border-gray-600 pl-4">

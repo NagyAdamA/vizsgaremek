@@ -37,10 +37,10 @@ const STANDARD_DISTANCES = [18, 25, 30, 50, 70, 90]
 const STANDARD_TARGET_SIZES = [40, 60, 80, 122]
 
 const sessionSchema = z.object({
-  name: z.string().min(1, 'Session name is required'),
-  distance: z.number().min(1, 'Distance must be at least 1 meter').max(200, 'Distance cannot exceed 200 meters'),
-  targetSize: z.number().min(1, 'Target size must be at least 1 cm').max(200, 'Target size cannot exceed 200 cm'),
-  arrowsPerEnd: z.number().min(1, 'Must have at least 1 arrow per end').max(12, 'Cannot exceed 12 arrows per end'),
+  name: z.string().min(1, 'Beírólap neve kötelező'),
+  distance: z.number().min(1, 'A távolság legalább 1m').max(300, 'A távolság nem lehet 300m felett'),
+  targetSize: z.number().min(1, 'A cél legalább 1cm').max(120, 'A cél nem lehet nagyobb, mint 120cm'),
+  arrowsPerEnd: z.number().min(1, 'Legalább 1 vessző').max(20, 'Maximum 20'),
   notes: z.string().optional(),
 })
 
@@ -88,7 +88,7 @@ function CreateSessionContent() {
     onError: (err: any) => {
       const errorMessage = err.response?.data?.message || err.response?.data?.error || 'Failed to create session. Please try again.'
       setError(errorMessage)
-      console.error('Create session error:', err)
+      console.error('Hiba a beírólap készítése közben:', err)
     },
   })
 
@@ -115,21 +115,21 @@ function CreateSessionContent() {
 
   function onSubmit(values: SessionSchemaType) {
     setError(null)
-    console.log('Submitting form with values:', values)
+    console.log('Beírőlap elmnentése a következő értékekkel:', values)
     createSessionMutation(values)
   }
 
   return (
     <div className="container mx-auto p-6 max-w-2xl">
       <div className="mb-6">
-        <h1 className="text-3xl font-bold mb-2">Create New Session</h1>
-        <p className="text-gray-500">Set up your archery practice session with standard competition settings</p>
+        <h1 className="text-3xl font-bold mb-2">Új beírólap</h1>
+        <p className="text-gray-500">Indíts beírólapot alapértelmezett értékekkel</p>
       </div>
       <Card className="shadow-lg border-2">
         <CardHeader>
-          <CardTitle className="text-2xl">Session Details</CardTitle>
+          <CardTitle className="text-2xl">Részletek</CardTitle>
           <CardDescription>
-            Enter the details for your archery practice session following standard archery rules
+            Add meg a részleteket és szabályokat
           </CardDescription>
         </CardHeader>
         <CardContent className="pt-6">
@@ -137,7 +137,7 @@ function CreateSessionContent() {
             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
               {/* Preset Selector */}
               <div className="space-y-2">
-                <label className="text-sm font-medium">Quick Preset</label>
+                <label className="text-sm font-medium">Gyorsmentett értékek</label>
                 <Select
                   value={selectedPreset}
                   onChange={(e) => handlePresetChange(e.target.value as keyof typeof ARCHERY_PRESETS)}
@@ -149,7 +149,7 @@ function CreateSessionContent() {
                   ))}
                 </Select>
                 <p className="text-xs text-gray-500">
-                  Select a standard archery round to auto-fill distance, target size, and arrows per end
+                  Válassz standard értékeket
                 </p>
               </div>
 
@@ -158,12 +158,12 @@ function CreateSessionContent() {
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Session Name</FormLabel>
+                    <FormLabel>Beírólap neve</FormLabel>
                     <FormControl>
-                      <Input placeholder="e.g., Morning Practice, WA 18 Round" {...field} />
+                      <Input placeholder="Gyakorlás - 18m WA" {...field} />
                     </FormControl>
                     <FormDescription>
-                      Give your session a descriptive name to easily identify it later
+                      Adj meg leírást a könnyebb azonosításért
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -175,7 +175,7 @@ function CreateSessionContent() {
                 name="distance"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Distance (meters)</FormLabel>
+                    <FormLabel>Távolság: (meters)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -205,7 +205,7 @@ function CreateSessionContent() {
                       ))}
                     </div>
                     <FormDescription>
-                      Standard distances: 18m (indoor), 25m (indoor), 30m, 50m, 70m (Olympic), 90m (recurve)
+                      Alapértelmezett távok: 18m (terem), 30m, 50m, 70m (olimpiai)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -217,7 +217,7 @@ function CreateSessionContent() {
                 name="targetSize"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Target Face Size (cm)</FormLabel>
+                    <FormLabel>Lőlap mérete (cm)</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -247,7 +247,7 @@ function CreateSessionContent() {
                       ))}
                     </div>
                     <FormDescription>
-                      Standard sizes: 40cm (18m indoor), 60cm (25m/30m), 80cm (50m), 122cm (70m/90m outdoor)
+                      Standard méretek: 40cm (18m terem), 60cm (30m), 80cm (50m), 120cm (70m szabadtéri - olimpiai)
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -259,7 +259,7 @@ function CreateSessionContent() {
                 name="arrowsPerEnd"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Arrows Per End</FormLabel>
+                    <FormLabel>Vesszők száma</FormLabel>
                     <FormControl>
                       <Input
                         type="number"
@@ -289,7 +289,7 @@ function CreateSessionContent() {
                       ))}
                     </div>
                     <FormDescription>
-                      Standard: 6 arrows per end (most common). Some formats use 3 arrows per end.
+                      Standard: 3 vessző / kör.
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -301,14 +301,12 @@ function CreateSessionContent() {
                 <div className="flex items-start gap-2">
                   <Info className="h-5 w-5 text-green-600 dark:text-green-400 mt-0.5" />
                   <div className="text-sm text-green-800 dark:text-green-200">
-                    <p className="font-semibold mb-1">Archery Standards Reference:</p>
+                    <p className="font-semibold mb-1">Standard beállítások:</p>
                     <ul className="list-disc list-inside space-y-1 text-xs">
-                      <li>Indoor 18m: 40cm target, 6 arrows/end</li>
-                      <li>Indoor 25m: 60cm target, 6 arrows/end</li>
-                      <li>Outdoor 30m: 60cm target, 6 arrows/end</li>
-                      <li>Outdoor 50m: 80cm target, 6 arrows/end</li>
-                      <li>Outdoor 70m (Olympic): 122cm target, 6 arrows/end</li>
-                      <li>Outdoor 90m (Recurve): 122cm target, 6 arrows/end</li>
+                      <li>Terem 18m: 40cm lőlap, 3 vessző/kör</li>
+                      <li>Szabadtéri 30m: 60cm lőlap, 6 vessző/kör</li>
+                      <li>Szabadtéri 50m: 80cm lőlap, 6 vessző/kör</li>
+                      <li>Szabadtéri 70m (Olimpiai): 120cm lőlap, 6 vessző/kör</li>
                     </ul>
                   </div>
                 </div>
@@ -319,15 +317,15 @@ function CreateSessionContent() {
                 name="notes"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Notes (optional)</FormLabel>
+                    <FormLabel>Megjegyzések (opcionális)</FormLabel>
                     <FormControl>
                       <Textarea
-                        placeholder="Weather conditions, equipment used, training focus, etc..."
+                        placeholder="Időjárás, felszerelés, fókusz, stb..."
                         {...field}
                       />
                     </FormControl>
                     <FormDescription>
-                      Add any additional information about this practice session
+                      Információk
                     </FormDescription>
                     <FormMessage />
                   </FormItem>
@@ -341,7 +339,7 @@ function CreateSessionContent() {
               )}
               {Object.keys(form.formState.errors).length > 0 && (
                 <div className="text-red-500 text-sm bg-red-50 dark:bg-red-900/20 p-3 rounded-md">
-                  Please fix the form errors above before submitting.
+                  Mentés előtt oldd fel a hibákat
                 </div>
               )}
               <div className="flex gap-4">
@@ -349,7 +347,7 @@ function CreateSessionContent() {
                   type="submit"
                   disabled={isPending}
                 >
-                  {isPending ? 'Creating...' : 'Create Session'}
+                  {isPending ? 'Beírólap készítése...' : 'Elkészült a beírólap'}
                 </Button>
                 <Button
                   type="button"
