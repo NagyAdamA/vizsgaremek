@@ -128,7 +128,8 @@ export function RegistrationForm({
               )}
               {success && (
                 <div className="text-green-500 text-sm bg-green-50 dark:bg-green-900/20 p-3 rounded-md">
-                  Sikeres regisztráció! Átirányítás a bejelentkezéshez...
+
+                  Sikeres regisztráció! Kérjük erősítse meg email címét a bejelentkezés előtt. Átirányítás...
                 </div>
               )}
               <Button type="submit" className="w-full" disabled={isPending || success}>

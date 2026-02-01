@@ -2,104 +2,128 @@ const { Model, DataTypes } = require("sequelize");
 
 const authUtils = require("../utilities/authUtils");
 
-module.exports = (sequelize) =>
-{
-    class User extends Model {};
+module.exports = (sequelize) => {
+    class User extends Model { };
 
     User.init
-    (
-        {
-            ID:
+        (
             {
-                type: DataTypes.INTEGER,
-                primaryKey: true,
-                autoIncrement: true,
-                allowNull: false,
-            },
-
-            name:
-            {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: "username"
-            },
-
-            email:
-            {
-                type: DataTypes.STRING,
-                allowNull: false,
-                unique: "email",
-
-                validate:
+                ID:
                 {
-                    isEmail:
-                    {
-                        args: true,
-
-                        msg: "Invalid email format",
-                    }
-                }
-            },
-
-            password:
-            {
-                type: DataTypes.STRING,
-                allowNull: false,
-
-                set(value)
-                {
-                    this.setDataValue("password", authUtils.hashPassword(value));
-                }
-            },
-
-            /* partialPasswordHash:
-            {
-                type: DataTypes.VIRTUAL,
-
-                get()
-                {
-                    return this.getDataValue("password").substring(0, this.getDataValue("password").length / 2);
+                    type: DataTypes.INTEGER,
+                    primaryKey: true,
+                    autoIncrement: true,
+                    allowNull: false,
                 },
-            }, */
 
-            isAdmin:
-            {
-                type: DataTypes.BOOLEAN,
-                allowNull: false,
-                defaultValue: false,
-            }
-        },
-
-        {
-            sequelize,
-            modelName: "User",
-            createdAt: "registeredAt",
-            updatedAt: false,
-
-            scopes:
-            {
-                public:
+                name:
                 {
-                    attributes: [ "name", "email", "registeredAt", "isAdmin" ],
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                    unique: "username"
+                },
 
-                    include:
+                email:
+                {
+                    type: DataTypes.STRING,
+                    allowNull: false,
+                    unique: "email",
+
+                    validate:
                     {
-                        association: "orders",
+                        isEmail:
+                        {
+                            args: true,
 
-                        attributes: ["product_name", "price", "orderedAt"],
+                            msg: "Invalid email format",
+                        }
                     }
                 },
 
-                admin:
+                password:
                 {
-                    where:
+                    type: DataTypes.STRING,
+                    allowNull: false,
+
+                    set(value) {
+                        this.setDataValue("password", authUtils.hashPassword(value));
+                    }
+                },
+
+
+                /* partialPasswordHash:
+                {
+                    type: DataTypes.VIRTUAL,
+    
+                    get()
                     {
-                        isAdmin: true,
+                        return this.getDataValue("password").substring(0, this.getDataValue("password").length / 2);
                     },
+                }, */
+
+                verificationToken:
+                {
+                    type: DataTypes.STRING,
+                    allowNull: true,
+                },
+
+                isVerified:
+                {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false,
+                },
+
+                resetPasswordToken:
+                {
+                    type: DataTypes.STRING,
+                    allowNull: true,
+                },
+
+                resetPasswordExpires:
+                {
+                    type: DataTypes.DATE,
+                    allowNull: true,
+                },
+
+                isAdmin:
+                {
+                    type: DataTypes.BOOLEAN,
+                    allowNull: false,
+                    defaultValue: false,
                 }
-            }
-        },
-    );
+            },
+
+            {
+                sequelize,
+                modelName: "User",
+                createdAt: "registeredAt",
+                updatedAt: false,
+
+                scopes:
+                {
+                    public:
+                    {
+                        attributes: ["ID", "name", "email", "registeredAt", "isAdmin"],
+
+                        include:
+                        {
+                            association: "orders",
+
+                            attributes: ["product_name", "price", "orderedAt"],
+                        }
+                    },
+
+                    admin:
+                    {
+                        where:
+                        {
+                            isAdmin: true,
+                        },
+                    }
+                }
+            },
+        );
 
     return User;
 }

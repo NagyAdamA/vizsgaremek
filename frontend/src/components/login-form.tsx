@@ -92,8 +92,12 @@ export function LoginForm({
                   name="password"
                   render={({ field }) => (
                     <FormItem>
+
                       <div className="flex items-center justify-between">
                         <FormLabel>Jelszó</FormLabel>
+                        <Link to="/forgot-password" className="text-sm underline underline-offset-4 hover:text-primary">
+                          Elfelejtett jelszó?
+                        </Link>
                       </div>
                       <FormControl>
                         <Input type="password" placeholder="Adja meg a jelszavát" {...field} />

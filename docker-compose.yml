@@ -31,8 +31,10 @@ services:
       DB_USER: root
       DB_PASSWORD: rootpassword
       DB_DIALECT: mysql
+
       DB_HOST: mysql
       JWT_SECRET: something that is not guessable by brute force methods
+      FRONTEND_URL: http://localhost
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"

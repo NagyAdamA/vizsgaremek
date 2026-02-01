@@ -6,9 +6,16 @@ const authController = require("../controllers/authController");
 
 const authMiddleware = require("../middlewares/authMiddleware");
 
+
 router.post("/login", authController.login);
 
-router.get("/status", [ authMiddleware.userIsLoggedIn ], authController.status);
+router.post("/verify-email", authController.verifyEmail);
+
+router.post("/forgot-password", authController.forgotPassword);
+
+router.post("/reset-password", authController.resetPassword);
+
+router.get("/status", [authMiddleware.userIsLoggedIn], authController.status);
 
 router.delete("/logout", authController.logout);
 
