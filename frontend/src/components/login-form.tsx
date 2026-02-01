@@ -24,8 +24,8 @@ import { useAuth } from "@/contexts/auth-context"
 import { useState } from "react"
 
 const loginSchema = z.object({
-  userID: z.string().min(1, "Username is required"),
-  password: z.string().min(1, "Password is required"),
+  userID: z.string().min(1, "Felhasználónév kötelező"),
+  password: z.string().min(1, "Jelszó kötelező"),
 })
 
 type LoginSchemaType = z.infer<typeof loginSchema>

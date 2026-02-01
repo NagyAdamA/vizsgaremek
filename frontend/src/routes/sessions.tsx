@@ -50,7 +50,7 @@ function SessionsContent() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center">Loading sessions...</div>
+        <div className="text-center">Sorozatok betöltése...</div>
       </div>
     )
   }
@@ -58,7 +58,7 @@ function SessionsContent() {
   if (error) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center text-red-500">Error loading sessions</div>
+        <div className="text-center text-red-500">Sorozatok betöltése sikertelen</div>
       </div>
     )
   }
@@ -74,10 +74,10 @@ function SessionsContent() {
   return (
     <div className="container mx-auto p-6">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold">Archery Sessions</h1>
+        <h1 className="text-3xl font-bold">Íjász Edzések</h1>
         <Button onClick={() => navigate({ to: '/sessions/create' })}>
           <Plus className="mr-2 h-4 w-4" />
-          New Session
+          Új Edzés
         </Button>
       </div>
 
@@ -86,9 +86,9 @@ function SessionsContent() {
           <CardContent className="pt-6">
             <div className="text-center py-8">
               <Target className="mx-auto h-12 w-12 text-gray-400 mb-4" />
-              <p className="text-gray-500 mb-4">No sessions yet</p>
+              <p className="text-gray-500 mb-4">Még nincsenek edzéseid</p>
               <Button onClick={() => navigate({ to: '/sessions/create' })}>
-                Create Your First Session
+                Kezdd el most
               </Button>
             </div>
           </CardContent>
@@ -112,19 +112,19 @@ function SessionsContent() {
                   <CardContent>
                     <div className="space-y-2">
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">Distance:</span>
+                        <span className="text-sm text-gray-500">Távolság:</span>
                         <span className="text-sm font-medium">{session.distance}m</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">Target Size:</span>
+                        <span className="text-sm text-gray-500">Tábla Méret:</span>
                         <span className="text-sm font-medium">{session.targetSize}cm</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">Arrows:</span>
+                        <span className="text-sm text-gray-500">Nyilak:</span>
                         <span className="text-sm font-medium">{stats.totalArrows}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">Average:</span>
+                        <span className="text-sm text-gray-500">Átlag:</span>
                         <span className="text-sm font-medium">{stats.avgScore}</span>
                       </div>
                     </div>

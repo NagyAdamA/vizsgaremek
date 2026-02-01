@@ -1,5 +1,4 @@
 import { createRouter } from '@tanstack/react-router'
-import { setupRouterSsrQueryIntegration } from '@tanstack/react-router-ssr-query'
 import * as TanstackQuery from './integrations/tanstack-query/root-provider'
 import { AuthProvider } from './contexts/auth-context'
 
@@ -25,7 +24,6 @@ export const getRouter = () => {
     },
   })
 
-  setupRouterSsrQueryIntegration({ router, queryClient: rqContext.queryClient })
 
   return router
 }

@@ -46,17 +46,17 @@ function App() {
           <div className="flex items-center justify-center gap-6 mb-6">
             <Target className="w-24 h-24 md:w-32 md:h-32 text-primary" />
             <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">VALAMI</span>{' '}
+              <span className="text-gray-300">Online</span>{' '}
               <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-                VALAMI
+                beírólap
               </span>
             </h1>
           </div>
           <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+            Vezesd könnyedén az edzések és versenyek eredményeit.
           </p>
           <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+            Lásd a fejlődést a statisztikákban.
           </p>
           <div className="flex flex-col items-center gap-4">
             {isAuthenticated ? (

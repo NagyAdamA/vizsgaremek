@@ -33,7 +33,7 @@ export default function Header() {
     <header className="p-4 flex items-center justify-between bg-gray-800 text-white shadow-lg">
       <h1 className="text-xl font-semibold">
         <Link to="/">
-          <span className="text-white">bruh moment</span>
+          <span className="text-white">Online beírólap</span>
         </Link>
       </h1>
 

@@ -52,7 +52,7 @@ function StatisticsContent() {
   if (isLoading) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center">Loading statistics...</div>
+        <div className="text-center">Statisztikák betöltése...</div>
       </div>
     )
   }
@@ -60,19 +60,19 @@ function StatisticsContent() {
   if (error || !stats) {
     return (
       <div className="container mx-auto p-6">
-        <div className="text-center text-red-500">Error loading statistics</div>
+        <div className="text-center text-red-500">Statisztikák betöltése sikertelen</div>
       </div>
     )
   }
 
   return (
     <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">Performance Statistics</h1>
+      <h1 className="text-3xl font-bold mb-6">Teljesítmény Statisztikák</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Sessions</CardTitle>
+            <CardTitle className="text-sm font-medium">Összes Edzés</CardTitle>
             <Target className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -82,7 +82,7 @@ function StatisticsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Total Arrows</CardTitle>
+            <CardTitle className="text-sm font-medium">Összes Nyíl</CardTitle>
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -92,7 +92,7 @@ function StatisticsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Overall Average</CardTitle>
+            <CardTitle className="text-sm font-medium">Átlag</CardTitle>
             <TrendingUp className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -102,7 +102,7 @@ function StatisticsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">X Percentage</CardTitle>
+            <CardTitle className="text-sm font-medium">X%</CardTitle>
             <Award className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -113,13 +113,13 @@ function StatisticsContent() {
 
       <Card>
         <CardHeader>
-          <CardTitle>Session History</CardTitle>
-          <CardDescription>Your recent archery sessions</CardDescription>
+          <CardTitle>Edzés Előzmények</CardTitle>
+          <CardDescription>Az eddigi edzéseid</CardDescription>
         </CardHeader>
         <CardContent>
           {stats.sessionStats.length === 0 ? (
             <div className="text-center py-8 text-muted-foreground">
-              No sessions recorded yet
+              Még nincsenek edzéseid
             </div>
           ) : (
             <div className="space-y-4">
@@ -138,11 +138,11 @@ function StatisticsContent() {
                     </div>
                     <div className="flex gap-6 text-sm">
                       <div>
-                        <span className="text-muted-foreground">Arrows: </span>
+                        <span className="text-muted-foreground">Nyilak: </span>
                         <span className="font-medium">{session.arrows}</span>
                       </div>
                       <div>
-                        <span className="text-muted-foreground">Average: </span>
+                        <span className="text-muted-foreground">Átlag: </span>
                         <span className="font-medium">{session.averageScore.toFixed(2)}</span>
                       </div>
                       <div>

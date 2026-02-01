@@ -125,7 +125,7 @@ export function ScoreEntry({ sessionID, arrowsPerEnd }: ScoreEntryProps) {
   }
 
   const handleDelete = (scoreID: number) => {
-    if (confirm('Are you sure you want to delete this score?')) {
+    if (confirm('Biztosan törlöd ezt az eredményt?')) {
       deleteMutation.mutate(scoreID)
     }
   }
@@ -150,7 +150,7 @@ export function ScoreEntry({ sessionID, arrowsPerEnd }: ScoreEntryProps) {
   }
 
   if (isLoading) {
-    return <div className="text-center py-4">Loading scores...</div>
+    return <div className="text-center py-4">Eredmények betöltése...</div>
   }
 
   const allEnds = getAllEnds()
