@@ -1,5 +1,9 @@
 const express = require("express");
 
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerSpec = require("./api/swagger");
+
 const app = express();
 
 const api = express();
@@ -43,6 +47,8 @@ api.use("/sessions", sessionRoutes);
 api.use("/scores", scoreRoutes);
 
 api.use("/statistics", statisticsRoutes);
+
+api.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 api.use(errorHandler.notFound);
 

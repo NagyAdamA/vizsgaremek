@@ -9,14 +9,22 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as VerifyEmailRouteImport } from './routes/verify-email'
 import { Route as StatisticsRouteImport } from './routes/statistics'
 import { Route as SessionsRouteImport } from './routes/sessions'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as RegistrationRouteImport } from './routes/registration'
 import { Route as LoginRouteImport } from './routes/login'
+import { Route as ForgotPasswordRouteImport } from './routes/forgot-password'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as SessionsCreateRouteImport } from './routes/sessions.create'
 import { Route as SessionsSessionIDRouteImport } from './routes/sessions.$sessionID'
 
+const VerifyEmailRoute = VerifyEmailRouteImport.update({
+  id: '/verify-email',
+  path: '/verify-email',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const StatisticsRoute = StatisticsRouteImport.update({
   id: '/statistics',
   path: '/statistics',
@@ -27,6 +35,11 @@ const SessionsRoute = SessionsRouteImport.update({
   path: '/sessions',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RegistrationRoute = RegistrationRouteImport.update({
   id: '/registration',
   path: '/registration',
@@ -35,6 +48,11 @@ const RegistrationRoute = RegistrationRouteImport.update({
 const LoginRoute = LoginRouteImport.update({
   id: '/login',
   path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ForgotPasswordRoute = ForgotPasswordRouteImport.update({
+  id: '/forgot-password',
+  path: '/forgot-password',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -55,29 +73,38 @@ const SessionsSessionIDRoute = SessionsSessionIDRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sessions': typeof SessionsRouteWithChildren
   '/statistics': typeof StatisticsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/sessions/$sessionID': typeof SessionsSessionIDRoute
   '/sessions/create': typeof SessionsCreateRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sessions': typeof SessionsRouteWithChildren
   '/statistics': typeof StatisticsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/sessions/$sessionID': typeof SessionsSessionIDRoute
   '/sessions/create': typeof SessionsCreateRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/forgot-password': typeof ForgotPasswordRoute
   '/login': typeof LoginRoute
   '/registration': typeof RegistrationRoute
+  '/reset-password': typeof ResetPasswordRoute
   '/sessions': typeof SessionsRouteWithChildren
   '/statistics': typeof StatisticsRoute
+  '/verify-email': typeof VerifyEmailRoute
   '/sessions/$sessionID': typeof SessionsSessionIDRoute
   '/sessions/create': typeof SessionsCreateRoute
 }
@@ -85,42 +112,61 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/forgot-password'
     | '/login'
     | '/registration'
+    | '/reset-password'
     | '/sessions'
     | '/statistics'
+    | '/verify-email'
     | '/sessions/$sessionID'
     | '/sessions/create'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/forgot-password'
     | '/login'
     | '/registration'
+    | '/reset-password'
     | '/sessions'
     | '/statistics'
+    | '/verify-email'
     | '/sessions/$sessionID'
     | '/sessions/create'
   id:
     | '__root__'
     | '/'
+    | '/forgot-password'
     | '/login'
     | '/registration'
+    | '/reset-password'
     | '/sessions'
     | '/statistics'
+    | '/verify-email'
     | '/sessions/$sessionID'
     | '/sessions/create'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ForgotPasswordRoute: typeof ForgotPasswordRoute
   LoginRoute: typeof LoginRoute
   RegistrationRoute: typeof RegistrationRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
   SessionsRoute: typeof SessionsRouteWithChildren
   StatisticsRoute: typeof StatisticsRoute
+  VerifyEmailRoute: typeof VerifyEmailRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/verify-email': {
+      id: '/verify-email'
+      path: '/verify-email'
+      fullPath: '/verify-email'
+      preLoaderRoute: typeof VerifyEmailRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/statistics': {
       id: '/statistics'
       path: '/statistics'
@@ -135,6 +181,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SessionsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/registration': {
       id: '/registration'
       path: '/registration'
@@ -147,6 +200,13 @@ declare module '@tanstack/react-router' {
       path: '/login'
       fullPath: '/login'
       preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/forgot-password': {
+      id: '/forgot-password'
+      path: '/forgot-password'
+      fullPath: '/forgot-password'
+      preLoaderRoute: typeof ForgotPasswordRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -189,10 +249,13 @@ const SessionsRouteWithChildren = SessionsRoute._addFileChildren(
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ForgotPasswordRoute: ForgotPasswordRoute,
   LoginRoute: LoginRoute,
   RegistrationRoute: RegistrationRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
   SessionsRoute: SessionsRouteWithChildren,
   StatisticsRoute: StatisticsRoute,
+  VerifyEmailRoute: VerifyEmailRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
