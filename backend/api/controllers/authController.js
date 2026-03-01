@@ -18,25 +18,7 @@ exports.login = async (req, res, next) => {
         return next(error);
     }
 
-    // Check if user is verified? Or allow login anyway?
-    // Often we block login if not verified.
-    // But requirement was "email verification", usually implies blocking or at least warning.
-    // For now, I won't block existing users, but new users might be blocked.
-    // Users are created with isVerified: false.
-    // If I block, I should check `user.isVerified`.
-    // Let's add that check if the user wants strictly verification.
-    // "help me implement nodemailer for an email verification ... feature"
-    // Usually means you verify before you can use the account.
-
-    if (user.isVerified === false) {
-        // Allow for now or block? safely, maybe just warn?
-        // Let's block to demonstrate the feature working.
-        // return res.status(401).json({ message: "Kérjük, erősítse meg email címét a bejelentkezéshez!" });
-    }
-
     if (bcrypt.compareSync(password, user.password)) {
-        // Only check verification if password is correct to avoid enumerating verified status easily?
-        // Actually, better to check password first.
 
         if (user.isVerified === false) {
             return res.status(403).json({ message: "Kérjük, erősítse meg email címét a bejelentkezéshez!" });
@@ -49,7 +31,7 @@ exports.login = async (req, res, next) => {
         res.status(200).json(token);
     }
     else {
-        res.status(401).json({ message: "Wrong password" });
+        res.status(401).json({ message: "Hibás jelszó" });
     }
 }
 
@@ -66,7 +48,7 @@ exports.logout = (req, res, next) => {
             path: "/",
         });
 
-    res.status(200).json({ message: "Logged out successfully" });
+    res.status(200).json({ message: "Sikeres kijelentkezés" });
 }
 
 exports.verifyEmail = async (req, res, next) => {

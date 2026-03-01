@@ -19,7 +19,6 @@ module.exports = (db) => {
 
     const mailService = new MailService();
 
-    // Inject mailService into userService
     userService.setMailService(mailService);
 
     return { userService, sessionService, scoreService, statisticsService, mailService };

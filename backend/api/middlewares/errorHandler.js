@@ -6,7 +6,6 @@ function notFound(req, res, next) {
 
 
 function showError(error, req, res, next) {
-    console.error("ERROR CAUGHT:", error);
     const stack = error.stack;
 
     if (!(error instanceof AppError)) {

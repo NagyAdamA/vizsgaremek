@@ -35,10 +35,8 @@ class UserService {
         if (!userData.password) throw new BadRequestError("Missing password from payload", { data: userData });
         if (!userData.email) throw new BadRequestError("Missing email from payload", { data: userData });
 
-        // Generate verification token
         const verificationToken = crypto.randomBytes(32).toString("hex");
 
-        // Prepare user data for creation
         const newUser = {
             ...userData,
             verificationToken: verificationToken,
@@ -47,7 +45,6 @@ class UserService {
 
         const user = await this.userRepository.createUser(newUser);
 
-        // Send verification email
         if (this.mailService) {
             try {
                 await this.mailService.sendVerificationEmail(user.email, verificationToken);
@@ -91,8 +88,6 @@ class UserService {
 
             return { message: "Jelszó emlékeztető email elküldve (ha létezik a fiók)" };
         } catch (error) {
-            // We shouldn't reveal if user exists or not for security, but usually we just return success.
-            // If getUser throws NotFoundError, we catch it.
             if (error instanceof NotFoundError) {
                 return { message: "Jelszó emlékeztető email elküldve (ha létezik a fiók)" };
             }
@@ -105,7 +100,6 @@ class UserService {
         const user = await this.userRepository.getUserByResetToken(token);
         if (!user) throw new BadRequestError("Érvénytelen vagy lejárt token");
 
-        // The User model setter handles hashing, so we pass the plain password
         await this.userRepository.updateUser({
             password: newPassword,
             resetPasswordToken: null,

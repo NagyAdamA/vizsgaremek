@@ -1,74 +1,31 @@
-const nodemailer = require("nodemailer");
+const { Resend } = require("resend");
 
 class MailService {
     constructor() {
-        this.transporter = null;
-        // Default frontend URL unless specified
+        this.resend = new Resend(process.env.RESEND_API_KEY);
         this.frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
-        this.init();
-    }
-
-    async init() {
-        // If credentials are provided in env, use them
-        if (process.env.SMTP_HOST && process.env.SMTP_USER) {
-            this.transporter = nodemailer.createTransport(
-                {
-                    host: process.env.SMTP_HOST,
-                    port: process.env.SMTP_PORT || 587,
-                    secure: false,
-                    auth:
-                    {
-                        user: process.env.SMTP_USER,
-                        pass: process.env.SMTP_PASS,
-                    },
-                });
-        }
-        else {
-            // Otherwise generate test account
-            try {
-                const testAccount = await nodemailer.createTestAccount();
-
-                this.transporter = nodemailer.createTransport(
-                    {
-                        host: "smtp.ethereal.email",
-                        port: 587,
-                        secure: false,
-                        auth:
-                        {
-                            user: testAccount.user,
-                            pass: testAccount.pass,
-                        },
-                    });
-
-                console.log("Mock mail server initialized using Ethereal.");
-                console.log("Credentials:", testAccount.user, testAccount.pass);
-            }
-            catch (err) {
-                console.error("Failed to create test account for mail:", err);
-            }
-        }
+        this.fromAddress = process.env.MAIL_FROM || "Vizsgaremek <noreply@vizsgaremek.hu>";
     }
 
     async sendEmail(to, subject, html) {
-        if (!this.transporter) await this.init();
+        const { data, error } = await this.resend.emails.send({
+            from: this.fromAddress,
+            to,
+            subject,
+            html,
+        });
 
-        const info = await this.transporter.sendMail(
-            {
-                from: '"Vizsgaremek" <noreply@vizsgaremek.hu>',
-                to,
-                subject,
-                html,
-            });
+        if (error) {
+            console.error("Failed to send email:", error);
+            throw new Error(error.message);
+        }
 
-        console.log("Message sent: %s", info.messageId);
-        // Preview only available when sending through an Ethereal account
-        console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-
-        return info;
+        console.log("Message sent:", data.id);
+        return data;
     }
 
     async sendVerificationEmail(to, token) {
-        const link = `${this.frontendUrl}:3000/verify-email?token=${token}`;
+        const link = `${this.frontendUrl}/verify-email?token=${token}`;
 
         const html = `
             <h1>Üdvözöljük!</h1>
@@ -82,7 +39,7 @@ class MailService {
     }
 
     async sendPasswordResetEmail(to, token) {
-        const link = `${this.frontendUrl}:3000/reset-password?token=${token}`;
+        const link = `${this.frontendUrl}/reset-password?token=${token}`;
 
         const html = `
             <h1>Elfelejtett jelszó</h1>

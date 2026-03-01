@@ -14,7 +14,7 @@ exports.userIsLoggedIn = (req, res, next) =>
     }
     catch(error)
     {
-        return next(new ValidationError("Failed to validate token"));
+        return next(new ValidationError("Sikertelen token érvényesítés"));
     }
 
     next();
@@ -22,7 +22,7 @@ exports.userIsLoggedIn = (req, res, next) =>
 
 exports.isAdmin = (req, res, next) =>
 {
-    if(!req.user.isAdmin) return next(new UnauthorizedError("You do not have the right privileges to access this feature"));
+    if(!req.user.isAdmin) return next(new UnauthorizedError("Nincs jogosultsága ehhez a funkcióhoz"));
 
     next();
 }
