@@ -1,10 +1,12 @@
 const { Resend } = require("resend");
 
+
 class MailService {
     constructor() {
         this.resend = new Resend(process.env.RESEND_API_KEY);
         this.frontendUrl = process.env.FRONTEND_URL || "http://localhost:5173";
         this.fromAddress = process.env.MAIL_FROM || "Vizsgaremek <noreply@vizsgaremek.hu>";
+
     }
 
     async sendEmail(to, subject, html) {
