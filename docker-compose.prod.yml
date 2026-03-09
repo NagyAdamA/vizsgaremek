@@ -37,8 +37,8 @@ services:
       FRONTEND_URL: http://${DOMAIN}
     labels:
       - "traefik.enable=true"
-      # Route requests based on your Host (domain) and the /api prefix
-      - "traefik.http.routers.backend.rule=Host(`${DOMAIN}`) && PathPrefix(`/api`)"
+      # Route requests based on any Host (domain or IP) and the /api prefix
+      - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
     depends_on:
@@ -50,7 +50,7 @@ services:
     labels:
       - "traefik.enable=true"
       # Route all other requests (not captured by /api) to the frontend
-      - "traefik.http.routers.frontend.rule=Host(`${DOMAIN}`)"
+      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
     depends_on:
