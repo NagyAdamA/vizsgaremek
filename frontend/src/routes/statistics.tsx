@@ -82,7 +82,7 @@ function StatisticsContent() {
 
         <Card>
           <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-            <CardTitle className="text-sm font-medium">Összes Nyíl</CardTitle>
+            <CardTitle className="text-sm font-medium">Összes vessző</CardTitle>
             <BarChart3 className="h-4 w-4 text-muted-foreground" />
           </CardHeader>
           <CardContent>
@@ -138,7 +138,7 @@ function StatisticsContent() {
                     </div>
                     <div className="flex gap-6 text-sm">
                       <div>
-                        <span className="text-muted-foreground">Nyilak: </span>
+                        <span className="text-muted-foreground">Vesszők: </span>
                         <span className="font-medium">{session.arrows}</span>
                       </div>
                       <div>

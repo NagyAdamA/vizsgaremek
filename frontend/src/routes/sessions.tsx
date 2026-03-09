@@ -120,7 +120,7 @@ function SessionsContent() {
                         <span className="text-sm font-medium">{session.targetSize}cm</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-sm text-gray-500">Nyilak:</span>
+                        <span className="text-sm text-gray-500">Vesszők:</span>
                         <span className="text-sm font-medium">{stats.totalArrows}</span>
                       </div>
                       <div className="flex justify-between">

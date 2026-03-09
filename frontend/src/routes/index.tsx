@@ -14,27 +14,27 @@ function App() {
   const features = [
     {
       icon: <Target className="w-12 h-12 text-primary" />,
-      title: 'Bruh',
+      title: 'Célok',
       description:
-        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Válassz távot és célméretet az eredmények megfelelő rögzítéséhez.',
     },
     {
       icon: <Plus className="w-12 h-12 text-primary" />,
-      title: 'Placeholder',
+      title: 'Profil',
       description:
-        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Regisztrált profilodon az összes eredményed elérhető.',
     },
     {
       icon: <BarChart3 className="w-12 h-12 text-primary" />,
-      title: 'Szeretem a palacsintát',
+      title: 'Statisztika',
       description:
-        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'Eredményeid a statisztiáknál nyomon követketed.',
     },
     {
       icon: <TrendingUp className="w-12 h-12 text-primary" />,
-      title: 'Cica',
+      title: 'Fejlődés',
       description:
-        'lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        'A beírólap használata segít a fejlődés vizualizálásában.',
     },
   ]
 
@@ -46,17 +46,16 @@ function App() {
           <div className="flex items-center justify-center gap-6 mb-6">
             <Target className="w-24 h-24 md:w-32 md:h-32 text-primary" />
             <h1 className="text-6xl md:text-7xl font-black text-white [letter-spacing:-0.08em]">
-              <span className="text-gray-300">Online</span>{' '}
+              <span className="text-gray-300">Célzóna</span>{' '}
               <span className="bg-gradient-to-r from-green-400 to-emerald-500 bg-clip-text text-transparent">
-                beírólap
               </span>
             </h1>
           </div>
           <p className="text-2xl md:text-3xl text-gray-300 mb-4 font-light">
-            Vezesd könnyedén az edzések és versenyek eredményeit.
+            Online beírólap
           </p>
-          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
-            Lásd a fejlődést a statisztikákban.
+          <p className="text-lg text-gray-400 max-w-3xl mx-auto mb-8">            
+            Vezesd könnyedén az edzések és versenyek eredményeit
           </p>
           <div className="flex flex-col items-center gap-4">
             {isAuthenticated ? (
@@ -65,14 +64,14 @@ function App() {
                   to="/sessions/create"
                   className="px-8 py-3 bg-primary hover:bg-primary/90 text-primary-foreground font-semibold rounded-lg transition-colors shadow-lg shadow-primary/50"
                 >
-                  Új session
+                  Új beírólap
                 </Link>
                 <div className="flex gap-4">
                   <Link
                     to="/sessions"
                     className="px-6 py-2 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition-colors"
                   >
-                    Összes session
+                    Összes beírólap
                   </Link>
                   <Link
                     to="/statistics"
