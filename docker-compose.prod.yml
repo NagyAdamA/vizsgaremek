@@ -39,20 +39,17 @@ services:
       FRONTEND_URL: http://${DOMAIN}
     labels:
       - "traefik.enable=true"
-      # Route requests based on any Host (domain or IP) and the /api prefix
+      # Route any request starting with /api to the backend
       - "traefik.http.routers.backend.rule=PathPrefix(`/api`)"
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
-    depends_on:
-      - mysql
-    restart: unless-stopped
 
-  frontend:
+frontend:
     build: ./frontend
     labels:
       - "traefik.enable=true"
-      # Route all other requests (not captured by /api) to the frontend
-      - "traefik.http.routers.frontend.rule=PathPrefix(`/`)"
+      # This captures absolutely all traffic that doesn't go to /api
+      - "traefik.http.routers.frontend.rule=HostRegexp(`{catchall:.*}`)"
       - "traefik.http.routers.frontend.entrypoints=web"
       - "traefik.http.services.frontend.loadbalancer.server.port=80"
     depends_on:
