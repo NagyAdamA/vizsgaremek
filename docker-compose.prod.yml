@@ -44,17 +44,17 @@ services:
       - "traefik.http.routers.backend.entrypoints=web"
       - "traefik.http.services.backend.loadbalancer.server.port=8000"
 
-frontend:
-    build: ./frontend
-    labels:
-      - "traefik.enable=true"
+  frontend:
+      build: ./frontend
+      labels:
+        - "traefik.enable=true"
       # This captures absolutely all traffic that doesn't go to /api
-      - "traefik.http.routers.frontend.rule=HostRegexp(`{catchall:.*}`)"
-      - "traefik.http.routers.frontend.entrypoints=web"
-      - "traefik.http.services.frontend.loadbalancer.server.port=80"
-    depends_on:
-      - backend
-    restart: unless-stopped
+        - "traefik.http.routers.frontend.rule=HostRegexp(`{catchall:.*}`)"
+        - "traefik.http.routers.frontend.entrypoints=web"
+        - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      depends_on:
+        - backend
+      restart: unless-stopped
 
 volumes:
   mysql-data:
