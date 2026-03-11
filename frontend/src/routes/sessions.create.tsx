@@ -38,9 +38,9 @@ const STANDARD_TARGET_SIZES = [40, 60, 80, 122]
 
 const sessionSchema = z.object({
   name: z.string().min(1, 'A sorozat neve kötelező'),
-  distance: z.number().min(1, 'A távolságnak legalább 1 méternek kell lennie').max(200, 'A távolság nem haladhatja meg a 200 métert'),
+  distance: z.number().min(1, 'A távolságnak legalább 1 méternek kell lennie').max(300, 'A távolság nem haladhatja meg a 300 métert'),
   targetSize: z.number().min(1, 'A célméretnek legalább 1 cm-nek kell lennie').max(200, 'A célméret nem haladhatja meg a 200 cm-t'),
-  arrowsPerEnd: z.number().min(1, 'Legalább 1 nyílnak kell lennie sorozatonként').max(12, 'Nem haladhatja meg a 12 nyilat sorozatonként'),
+  arrowsPerEnd: z.number().min(1, 'Legalább 1 nyílnak kell lennie sorozatonként').max(15, 'Nem haladhatja meg a 15 vesszőt sorozatonként'),
   notes: z.string().optional(),
 })
 
