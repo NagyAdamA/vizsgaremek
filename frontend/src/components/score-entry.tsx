@@ -197,10 +197,13 @@ export function ScoreEntry({ sessionID, arrowsPerEnd }: ScoreEntryProps) {
                       {score ? (
                         <div className="flex items-center gap-1">
                           <Button
-                            variant="outline"
+                            variant={currentEnd === end && currentArrow === arrow ? "default" : "outline"}
                             size="sm"
-                            className="w-12"
-                            onClick={() => handleScoreClick(score.score, score.isX)}
+                            className={`w-12 ${currentEnd === end && currentArrow === arrow ? 'ring-2 ring-blue-500 font-bold' : ''}`}
+                            onClick={() => {
+                              setCurrentEnd(end)
+                              setCurrentArrow(arrow)
+                            }}
                           >
                             {score.isX && score.score === 10 ? 'X' : score.score}
                           </Button>
@@ -214,7 +217,17 @@ export function ScoreEntry({ sessionID, arrowsPerEnd }: ScoreEntryProps) {
                           </Button>
                         </div>
                       ) : (
-                        <div className="w-12 h-8 border border-dashed border-gray-300 rounded flex items-center justify-center text-gray-400 text-xs">
+                        <div
+                          className={`w-12 h-8 border border-dashed rounded flex items-center justify-center text-xs cursor-pointer transition-colors ${
+                            currentEnd === end && currentArrow === arrow
+                              ? 'border-blue-500 bg-blue-50 text-blue-700 font-bold ring-2 ring-blue-500'
+                              : 'border-gray-300 text-gray-400 hover:bg-gray-50'
+                          }`}
+                          onClick={() => {
+                            setCurrentEnd(end)
+                            setCurrentArrow(arrow)
+                          }}
+                        >
                           -
                         </div>
                       )}
