@@ -1,0 +1,59 @@
+const express = require("express");
+
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerSpec = require("./api/swagger");
+
+const app = express();
+
+const api = express();
+
+const cors = require("cors");
+
+const cookieParser = require("cookie-parser");
+
+app.use(cors(
+    {
+        origin: ["http://localhost:3000", "http://localhost:3001", "http://localhost:5173", "http://localhost", "http://95.217.157.181"],
+        credentials: true,
+    }));
+
+app.use(express.json());
+
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+
+const userRoutes = require("./api/routes/userRoutes");
+
+const errorHandler = require("./api/middlewares/errorHandler");
+
+const authRoutes = require("./api/routes/authRoutes");
+
+const sessionRoutes = require("./api/routes/sessionRoutes");
+
+const scoreRoutes = require("./api/routes/scoreRoutes");
+
+const statisticsRoutes = require("./api/routes/statisticsRoutes");
+
+app.use("/api", api);
+
+api.use("/users", userRoutes);
+
+api.use("/auth", authRoutes);
+
+api.use("/sessions", sessionRoutes);
+
+api.use("/scores", scoreRoutes);
+
+api.use("/statistics", statisticsRoutes);
+
+api.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+
+api.use(errorHandler.notFound);
+
+app.use(errorHandler.showError);
+
+app.use(errorHandler.notFound);
+
+module.exports = app;

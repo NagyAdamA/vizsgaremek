@@ -1,0 +1,11 @@
+{
+    "name": "vizsgaremek",
+    "version": "1.0.0",
+    "main": "electron/main.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "devDependencies": {
+        "electron": "^35.0.0"
+    }
+}
